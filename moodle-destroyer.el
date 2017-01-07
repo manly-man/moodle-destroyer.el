@@ -77,7 +77,7 @@
   (org-mode))
 
 
-(defun moodle-destroyer-to-org (file-path)
+(defun moodle-destroyer-json-to-org (file-path)
   "Generate an 'org-mode' file from a file at the given FILE-PATH."
   (interactive "FPlease enter path to moodle-destroyer gradingfile.json: ")
   (moodle-destroyer-org-from-file file-path))
