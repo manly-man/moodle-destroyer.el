@@ -43,19 +43,27 @@
 
 (require 'json)
 
-(defun moodle-destroyer-org-parse-grade (grade)
-  "Parse the given GRADE."
-  (princ (format "** %s
+(defconst moodle-destroyer-header-template "* Assignment
+:PROPERTIES:
+:%s: %s
+:END\n\n")
+
+(defconst moodle-destroyer-grade-template "** %s
 :PROPERTIES:
 :%s: %s
 :%s: %s
 :%s: %s
-:END \n
-%s \n \n" (cdr (assoc 'name grade))
-(car (assoc 'name grade)) (cdr (assoc 'name grade))
-(car (assoc 'id grade)) (cdr (assoc 'id grade))
-(car (assoc 'grade grade)) (cdr (assoc 'grade grade))
-(cdr (assoc 'feedback grade)))))
+:END\n
+%s\n\n")
+
+(defun moodle-destroyer-org-parse-grade (grade)
+  "Parse the given GRADE."
+  (princ (format moodle-destroyer-grade-template
+                 (cdr (assoc 'name grade))
+                 (car (assoc 'name grade)) (cdr (assoc 'name grade))
+                 (car (assoc 'id grade)) (cdr (assoc 'id grade))
+                 (car (assoc 'grade grade)) (cdr (assoc 'grade grade))
+                 (cdr (assoc 'feedback grade)))))
 
 
 (defun moodle-destroyer-org-from-file (file)
@@ -64,9 +72,9 @@
   (with-current-buffer "grading.org"
     ;; Insert assignment_id to output-file
     (insert
-     (princ (format "* Assignment: %s \n\n"
-                    (cdr (assoc 'assignment_id
-                                (json-read-file file))))))
+     (princ (format moodle-destroyer-header-template
+                    (car (assoc 'assignment_id (json-read-file file)))
+                    (cdr (assoc 'assignment_id (json-read-file file))))))
     ;; Map grades
     (mapc
      (lambda (grade)
