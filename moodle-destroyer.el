@@ -41,7 +41,9 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'json)
+(require 'org-element)
 
 (defconst moodle-destroyer-header-template "* Assignment
 :PROPERTIES:
