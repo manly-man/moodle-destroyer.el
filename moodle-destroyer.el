@@ -5,7 +5,7 @@
 ;; Author: Christian van Onzenoodt <onze@onze.io>
 ;; Maintainer: Christian van Onzenoodt <onze@onze.io>
 ;; URL: https://github.com/manly-man/moodle-destroyer.el
-;; Version: 0.0.1
+;; Version: 0.1.0
 ;; Keywords: emacs orgmode org export
 ;; Package-Requires: ((emacs "25") (cl-lib "2.1") (json "1.4") (org-element "*"))
 
