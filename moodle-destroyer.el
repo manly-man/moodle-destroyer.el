@@ -187,14 +187,12 @@ from lines like:
 (defun moodle-destroyer-org-to-json ()
   "Generate a gradingfile.json from a 'org-mode' buffer."
   (interactive)
-  (princ
-   (format "%s"
-           (if (string= (buffer-local-value 'major-mode (current-buffer)) "org-mode")
-               ;; if current-buffer is org-mode, read the buffer, convert to json and write to file
-               (moodle-destroyer-json-to-file
-                (json-encode (moodle-destroyer-json-from-buffer))
-                moodle-destroyer-gradingfile-json-name)
-             "The current buffer is NOT an org-mode buffer!"))))
+  (if (string= (buffer-local-value 'major-mode (current-buffer)) "org-mode")
+      ;; if current-buffer is org-mode, read the buffer, convert to json and write to file
+      (moodle-destroyer-json-to-file
+       (json-encode (moodle-destroyer-json-from-buffer))
+       moodle-destroyer-gradingfile-json-name)
+    (print "The current buffer is NOT an org-mode buffer!")))
 
 
 (provide 'moodle-destroyer)
