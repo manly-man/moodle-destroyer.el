@@ -3,6 +3,8 @@
 *.org
 *.json
 
+.tern-port
+
 # Created by https://www.gitignore.io/api/elisp,emacs,vim
 
 ### Elisp ###
