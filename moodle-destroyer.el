@@ -7,7 +7,7 @@
 ;; URL: https://github.com/manly-man/moodle-destroyer.el
 ;; Version: 0.0.1
 ;; Keywords: emacs orgmode org export
-;; Package-Requires: ((emacs "24") (json "1.4"))
+;; Package-Requires: ((emacs "25") (cl-lib "2.1") (json "1.4") (org-element "*"))
 
 ;; This file is not part of GNU Emacs
 
