@@ -132,12 +132,16 @@ from lines like:
       (cl-mapcar
        #'cons
        '(:feedback)
-       (list
-        (moodle-destroyer-trim
-         ;; Read feedback content from BEGIN_FEEDBACK section
-         (buffer-substring-no-properties
-          (org-element-property :contents-begin sb)
-          (org-element-property :contents-end sb))))))))
+       ;; remove all nil elements from the list
+       (delq nil
+             (list
+              ;; if the type of the special block is not FEEDBACK, return nil
+              (if (string= (org-element-property :type sb) "FEEDBACK")
+                  (moodle-destroyer-trim
+                   ;; Read feedback content from BEGIN_FEEDBACK section
+                   (buffer-substring-no-properties
+                    (org-element-property :contents-begin sb)
+                    (org-element-property :contents-end sb))))))))))
 
 
 (defun moodle-destroyer-json-from-buffer ()
