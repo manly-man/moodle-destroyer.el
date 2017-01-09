@@ -55,7 +55,11 @@
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
 #+STARTUP: showeverything
 
-#+ASSIGNMENT_ID: %s\n\n")
+#+ASSIGNMENT_ID: %s
+
+#+BEGIN_NOTE
+
+#+END_NOTE\n\n")
 
 ;; Template for a grade-section
 (defconst moodle-destroyer-grade-template "* %s
