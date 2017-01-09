@@ -95,12 +95,12 @@ from lines like:
 
 (defun moodle-destroyer-org-parse-grade (grade)
   "Parse the given GRADE."
-  (princ (format moodle-destroyer-grade-template
-                 (cdr (assoc 'name grade))
-                 (car (assoc 'name grade)) (cdr (assoc 'name grade))
-                 (car (assoc 'id grade)) (cdr (assoc 'id grade))
-                 (car (assoc 'grade grade)) (cdr (assoc 'grade grade))
-                 (cdr (assoc 'feedback grade)))))
+  (format moodle-destroyer-grade-template
+          (cdr (assoc 'name grade))
+          (car (assoc 'name grade)) (cdr (assoc 'name grade))
+          (car (assoc 'id grade)) (cdr (assoc 'id grade))
+          (car (assoc 'grade grade)) (cdr (assoc 'grade grade))
+          (cdr (assoc 'feedback grade))))
 
 
 (defun moodle-destroyer-parse-org-document-properties ()
@@ -159,8 +159,8 @@ from lines like:
   (with-current-buffer moodle-destroyer-gradingfile-org-name
     ;; Insert assignment_id to output-file
     (insert
-     (princ (format moodle-destroyer-header-template
-                    (cdr (assoc 'assignment_id (json-read-file file))))))
+     (format moodle-destroyer-header-template
+             (cdr (assoc 'assignment_id (json-read-file file)))))
     ;; Map grades
     (mapc
      (lambda (grade)
