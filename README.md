@@ -5,10 +5,12 @@ Emacs plugin for [moodle-destroyer-tools](https://github.com/manly-man/moodle-de
 Converts a gradingfile.json into emacs [org-mode](http://orgmode.org) and back to json.
 
 ``` json
-{"assignment_id": 1337, "grades": [
-  {"name": "Gruppe A", "id": 42, "grade": 100.0, "feedback":"Great job!" },
-  {"name": "Gruppe B", "id": 21, "grade": 0.0, "feedback":"" }
-]}
+{
+  "assignment_id": "1337", "grades": [
+    {"name": "Gruppe A", "id": 42, "grade": 100.0, "feedback": "Das war toll"},
+    {"name": "Gruppe B", "id": 21, "grade": 0.0, "feedback": ""}
+  ]
+}
 ```
 
 ``` org-mode
@@ -17,26 +19,31 @@ Converts a gradingfile.json into emacs [org-mode](http://orgmode.org) and back t
 
 #+ASSIGNMENT_ID: 1337
 
-* Gruppe C
-:PROPERTIES:
-:name: Gruppe A
-:id: 42
-:grade: 100.0
-:END:
+#+BEGIN_NOTE
+This is a note for grading
+#+END_NOTE
 
-#+BEGIN_FEEDBACK
-Great job!
-#+END_FEEDBACK
+* Gruppe A
+  :PROPERTIES:
+  :name: Gruppe A
+  :id: 42
+  :grade: 100.0
+  :END:
 
-* Gruppe S
-:PROPERTIES:
-:name: Gruppe B
-:id: 21
-:grade: 0.0
-:END:
+  #+BEGIN_FEEDBACK
+  Das war toll
+  #+END_FEEDBACK
 
-#+BEGIN_FEEDBACK
-#+END_FEEDBACK
+* Gruppe B
+  :PROPERTIES:
+  :name: Gruppe B
+  :id: 21
+  :grade: 0.0
+  :END:
+
+  #+BEGIN_FEEDBACK
+
+  #+END_FEEDBACK
 ```
 
 ## Installation

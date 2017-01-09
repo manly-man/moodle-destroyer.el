@@ -5,7 +5,7 @@
 ;; Author: Christian van Onzenoodt <onze@onze.io>
 ;; Maintainer: Christian van Onzenoodt <onze@onze.io>
 ;; URL: https://github.com/manly-man/moodle-destroyer.el
-;; Version: 0.1.1
+;; Version: 0.2.0
 ;; Keywords: emacs orgmode org export
 ;; Package-Requires: ((emacs "25") (cl-lib "2.1") (json "1.4") (org-element "*"))
 
@@ -39,6 +39,10 @@
 
 ;;; News:
 
+;;; 0.2.0 - Add note block for grading notes
+;;; 0.1.1 - Fix printing of error code
+;;; 0.1.0 - Converting gradingfile.json to org-mode and back to json
+
 ;;; Code:
 
 (require 'cl-lib)
@@ -55,7 +59,11 @@
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
 #+STARTUP: showeverything
 
-#+ASSIGNMENT_ID: %s\n\n")
+#+ASSIGNMENT_ID: %s
+
+#+BEGIN_NOTE
+
+#+END_NOTE\n\n")
 
 ;; Template for a grade-section
 (defconst moodle-destroyer-grade-template "* %s
@@ -95,12 +103,12 @@ from lines like:
 
 (defun moodle-destroyer-org-parse-grade (grade)
   "Parse the given GRADE."
-  (princ (format moodle-destroyer-grade-template
-                 (cdr (assoc 'name grade))
-                 (car (assoc 'name grade)) (cdr (assoc 'name grade))
-                 (car (assoc 'id grade)) (cdr (assoc 'id grade))
-                 (car (assoc 'grade grade)) (cdr (assoc 'grade grade))
-                 (cdr (assoc 'feedback grade)))))
+  (format moodle-destroyer-grade-template
+          (cdr (assoc 'name grade))
+          (car (assoc 'name grade)) (cdr (assoc 'name grade))
+          (car (assoc 'id grade)) (cdr (assoc 'id grade))
+          (car (assoc 'grade grade)) (cdr (assoc 'grade grade))
+          (cdr (assoc 'feedback grade))))
 
 
 (defun moodle-destroyer-parse-org-document-properties ()
@@ -128,12 +136,16 @@ from lines like:
       (cl-mapcar
        #'cons
        '(:feedback)
-       (list
-        (moodle-destroyer-trim
-         ;; Read feedback content from BEGIN_FEEDBACK section
-         (buffer-substring-no-properties
-          (org-element-property :contents-begin sb)
-          (org-element-property :contents-end sb))))))))
+       ;; remove all nil elements from the list
+       (delq nil
+             (list
+              ;; if the type of the special block is not FEEDBACK, return nil
+              (if (string= (org-element-property :type sb) "FEEDBACK")
+                  (moodle-destroyer-trim
+                   ;; Read feedback content from BEGIN_FEEDBACK section
+                   (buffer-substring-no-properties
+                    (org-element-property :contents-begin sb)
+                    (org-element-property :contents-end sb))))))))))
 
 
 (defun moodle-destroyer-json-from-buffer ()
@@ -159,8 +171,8 @@ from lines like:
   (with-current-buffer moodle-destroyer-gradingfile-org-name
     ;; Insert assignment_id to output-file
     (insert
-     (princ (format moodle-destroyer-header-template
-                    (cdr (assoc 'assignment_id (json-read-file file))))))
+     (format moodle-destroyer-header-template
+             (cdr (assoc 'assignment_id (json-read-file file)))))
     ;; Map grades
     (mapc
      (lambda (grade)
