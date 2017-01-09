@@ -39,6 +39,10 @@
 
 ;;; News:
 
+;;; 0.2.0 - Add note block for grading notes
+;;; 0.1.1 - Fix printing of error code
+;;; 0.1.0 - Converting gradingfile.json to org-mode and back to json
+
 ;;; Code:
 
 (require 'cl-lib)
