@@ -55,6 +55,9 @@
 ;; Header-template
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
 #+STARTUP: showeverything
+# Local Variables:
+# eval: (moodle-destroyer-mode)
+# End:
 
 #+ASSIGNMENT_ID: %s
 
@@ -177,7 +180,8 @@ from lines like:
      (cdr (assoc 'grades
                  (json-read-file file)))))
   (switch-to-buffer moodle-destroyer-gradingfile-org-name)
-  (org-mode))
+  (org-mode)
+  (moodle-destroyer-mode))
 
 
 (defun moodle-destroyer-json-to-file (json file)

@@ -47,6 +47,20 @@
 
 (require 'moodle-destroyer-convert)
 
+;; String for the mode line
+(defconst moodle-destroyer-mode-lighter " MoodleDestroyer")
+
+
+(defvar moodle-destroyer-mode-map
+  (let ((map (make-sparse-keymap)))
+    map))
+
+
+(define-minor-mode moodle-destroyer-mode
+  "Moodle-destroyer mode"
+  :lighter moodle-destroyer-mode-lighter
+  :keymap  moodle-destroyer-mode-map)
+
 
 (defun moodle-destroyer-json-to-org (file-path)
   "Generate an 'org-mode' file from a file at the given FILE-PATH."
