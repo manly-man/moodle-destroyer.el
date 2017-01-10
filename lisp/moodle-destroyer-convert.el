@@ -55,6 +55,9 @@
 ;; Header-template
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
 #+STARTUP: showeverything
+# Local Variables:
+# eval: (moodle-destroyer-mode)
+# End:
 
 #+ASSIGNMENT_ID: %s
 
