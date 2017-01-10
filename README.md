@@ -16,6 +16,9 @@ Converts a gradingfile.json into emacs [org-mode](http://orgmode.org) and back t
 ``` org-mode
 # -*- mode: org; -*-
 #+STARTUP: showeverything
+# Local Variables:
+# eval: (moodle-destroyer-mode)
+# End:
 
 #+ASSIGNMENT_ID: 1337
 
@@ -52,9 +55,17 @@ Clone the repository and add the following to your init.el
 
 ``` elisp
 (use-package moodle-destroyer
-  :load-path "path/to/moodle-destroyer.el"
+  :load-path "/Users/onze/Repos/moodle-destroyer.el/lisp"
+  :bind(:map
+        moodle-destroyer-mode-map
+        ("C-c C-c" . moodle-destroyer-org-to-json))
   :commands (moodle-destroyer-json-to-org
-             moodle-destroyer-org-to-json))
+             moodle-destroyer-org-to-json)
+  :config
+  ;; set custom name for org-mode gradingfile
+  (setq moodle-destroyer-gradingfile-org-name "grading.org")
+  ;; set custom name for exported json file
+  (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
 ```
 
 ## Usage

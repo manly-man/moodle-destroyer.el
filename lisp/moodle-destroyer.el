@@ -5,7 +5,7 @@
 ;; Author: Christian van Onzenoodt <onze@onze.io>
 ;; Maintainer: Christian van Onzenoodt <onze@onze.io>
 ;; URL: https://github.com/manly-man/moodle-destroyer.el
-;; Version: 0.2.0
+;; Version: 0.3.0
 ;; Keywords: emacs orgmode org export
 ;; Package-Requires: ((emacs "25") (cl-lib "2.1") (json "1.4") (org-element "*"))
 
@@ -39,6 +39,9 @@
 
 ;;; News:
 
+;;; 0.3.0 - Define minor mode `moodle-destroyer-mode' for grading
+;;;       - Customizable variables
+;;;       - Code cleanup
 ;;; 0.2.0 - Add note block for grading notes
 ;;; 0.1.1 - Fix printing of error code
 ;;; 0.1.0 - Converting gradingfile.json to org-mode and back to json
