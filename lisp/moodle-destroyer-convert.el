@@ -47,7 +47,7 @@
 (require 'org-element)
 
 ;; Default name for the 'org-mode' gradingfile
-(defconst moodle-destroyer-gradingfile-org-name "gradingfile.org")
+(defconst moodle-destroyer-gradingfile-org-name "gradingfile.mdt.org")
 
 ;; Default name for the generated json grading file
 (defconst moodle-destroyer-gradingfile-json-name "gradingfile-org-export.json")
