@@ -1,4 +1,4 @@
-;;; moodle-destroyer.el --- Convert a gradingfile.json into an org-mode file
+;;; moodle-destroyer-convert.el --- Convert a gradingfile.json into an org-mode file
 
 ;; Copyright (C) 2017 manly-man
 
@@ -37,11 +37,8 @@
 
 ;;; Commentary:
 
-;;; News:
-
-;;; 0.2.0 - Add note block for grading notes
-;;; 0.1.1 - Fix printing of error code
-;;; 0.1.0 - Converting gradingfile.json to org-mode and back to json
+;;; This library provides methods to convert a gradingfile.json to org-mode
+;;; and back
 
 ;;; Code:
 
@@ -50,14 +47,17 @@
 (require 'org-element)
 
 ;; Default name for the 'org-mode' gradingfile
-(defconst moodle-destroyer-gradingfile-org-name "gradingfile.org")
+(defvar moodle-destroyer-gradingfile-org-name "gradingfile.org")
 
 ;; Default name for the generated json grading file
-(defconst moodle-destroyer-gradingfile-json-name "gradingfile-org-export.json")
+(defvar moodle-destroyer-gradingfile-json-name "gradingfile-org-export.json")
 
 ;; Header-template
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
 #+STARTUP: showeverything
+# Local Variables:
+# eval: (moodle-destroyer-mode)
+# End:
 
 #+ASSIGNMENT_ID: %s
 
@@ -180,7 +180,8 @@ from lines like:
      (cdr (assoc 'grades
                  (json-read-file file)))))
   (switch-to-buffer moodle-destroyer-gradingfile-org-name)
-  (org-mode))
+  (org-mode)
+  (moodle-destroyer-mode))
 
 
 (defun moodle-destroyer-json-to-file (json file)
@@ -190,23 +191,6 @@ from lines like:
   (insert (format "%s" json)))
 
 
-(defun moodle-destroyer-json-to-org (file-path)
-  "Generate an 'org-mode' file from a file at the given FILE-PATH."
-  (interactive "FPlease enter path to moodle-destroyer gradingfile.json: ")
-  (moodle-destroyer-org-from-file file-path))
+(provide 'moodle-destroyer-convert)
 
-
-(defun moodle-destroyer-org-to-json ()
-  "Generate a gradingfile.json from a 'org-mode' buffer."
-  (interactive)
-  (if (string= (buffer-local-value 'major-mode (current-buffer)) "org-mode")
-      ;; if current-buffer is org-mode, read the buffer, convert to json and write to file
-      (moodle-destroyer-json-to-file
-       (json-encode (moodle-destroyer-json-from-buffer))
-       moodle-destroyer-gradingfile-json-name)
-    (print "The current buffer is NOT an org-mode buffer!")))
-
-
-(provide 'moodle-destroyer)
-
-;;; moodle-destroyer.el ends here
+;;; moodle-destroyer-convert.el ends here
