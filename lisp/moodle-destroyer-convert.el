@@ -47,10 +47,10 @@
 (require 'org-element)
 
 ;; Default name for the 'org-mode' gradingfile
-(defconst moodle-destroyer-gradingfile-org-name "gradingfile.mdt.org")
+(defvar moodle-destroyer-gradingfile-org-name "gradingfile.org")
 
 ;; Default name for the generated json grading file
-(defconst moodle-destroyer-gradingfile-json-name "gradingfile-org-export.json")
+(defvar moodle-destroyer-gradingfile-json-name "gradingfile-org-export.json")
 
 ;; Header-template
 (defconst moodle-destroyer-header-template "# -*- mode: org; -*-
